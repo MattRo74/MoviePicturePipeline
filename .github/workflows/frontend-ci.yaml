@@ -61,6 +61,28 @@ jobs:
     - name: Install Dependencies
       working-directory: starter/frontend
       run: npm ci
-  
+
     - name: Test
       run: npm run test
+
+  build:
+    needs: [lint, test]
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check the Repository
+      uses: actions/checkout@v3
+
+     - name: Use Node.js 18
+       uses: actions/setup-node@v3
+       with:
+         node-version: 18
+
+    - name: Build Docker Image - Frontend
+      run: docker build --build-arg=REACT_APP_MOVIE_URL=$REACT_APP_MOVIE_URL --tag mp-frontend:latest .
+    
+    - name: Check docker image
+      run: docker images|grep mp-frontend
+
+    - name: Run docker image
+      run: docker run --name mp-frontend -p 3000:3000 -d mp-frontend
