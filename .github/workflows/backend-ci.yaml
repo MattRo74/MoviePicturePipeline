@@ -35,7 +35,7 @@ jobs:
           ${{ runner.os }}-pip-
 
     - name: Install Dependencies
-      run:  pipenv install --dev
+      run:  pip install pipenv
 
     - name: Run the Linter
       run: pipenv run lint
