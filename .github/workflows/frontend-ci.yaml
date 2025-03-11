@@ -16,7 +16,7 @@ env:
   REACT_APP_MOVIE_URL: 'https://localhost:5000'
 
 jobs:
-  lin:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -27,8 +27,15 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: 18
-        cache: 'npm'
-        cache-dependency-path: package-lock.json
+
+    - name: Restore Cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.npm
+        key: ${{ runner.os }}-npm-cache-${{ hashFiles('**/package.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-npm-cache-
 
     - name: Install Dependencies
       working-directory: starter/frontend
