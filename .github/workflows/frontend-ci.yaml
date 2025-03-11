@@ -12,7 +12,8 @@ defaults:
   run:
     working-directory: ./starter/frontend
 
-env: REACT_APP_MOVIE_URL: 'https://localhost:5000'
+env: 
+  REACT_APP_MOVIE_URL: 'https://localhost:5000'
 
 jobs:
   lin:
