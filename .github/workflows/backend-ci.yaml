@@ -61,5 +61,9 @@ jobs:
         pip install pipenv
         pip install flake8
 
+    - name: Install pytest
+      run: pipenv install pytest
+
+
     - name: Test
       run: pipenv run test
