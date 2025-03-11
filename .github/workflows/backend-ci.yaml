@@ -67,27 +67,27 @@ jobs:
     - name: Test
       run: pipenv run test
 
-build:
-    needs: [lint, test]
-    runs-on: ubuntu-latest
+  build:
+      needs: [lint, test]
+      runs-on: ubuntu-latest
 
-    steps:
-    - name: Check the Repository
-      uses: actions/checkout@v3
+      steps:
+      - name: Check the Repository
+        uses: actions/checkout@v3
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.10"     
-    
-    - name: Build Docker Image - Backend
-      run: docker build --tag mp-backend:latest .
-    
-    - name: Check docker image
-      run: docker images|grep mp-backend
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"     
+      
+      - name: Build Docker Image - Backend
+        run: docker build --tag mp-backend:latest .
+      
+      - name: Check docker image
+        run: docker images|grep mp-backend
 
-    - name: Run docker image
-      run: docker run --name mp-backend -p 5000:5000 -d mp-backend
+      - name: Run docker image
+        run: docker run --name mp-backend -p 5000:5000 -d mp-backend
 
-    - name: Check application
-      run: curl http://localhost:5000/movies  
+      - name: Check application
+        run: curl http://localhost:5000/movies  
