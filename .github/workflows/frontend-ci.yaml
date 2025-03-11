@@ -6,10 +6,15 @@ on:
     branches:
       - main
 
+defaults:
+  run:
+    working-directory: ./starter/frontend
+
+env: REACT_APP_MOVIE_URL: 'https://localhost:5000'
+
 jobs:
-  Linting:
+  lin:
     runs-on: ubuntu-latest
-    environment: Devlopmnet Environment
 
     steps:
     - name: Check the Repository
@@ -20,16 +25,16 @@ jobs:
       with:
         node-version: 18
         cache: 'npm'
-        cache-dependency-path: starter/frontend/package-lock.json
+        cache-dependency-path: package-lock.json
 
     - name: Install Dependencies
       working-directory: starter/frontend
       run: npm ci
 
-    - name: Checkout Run Lint
-      run: cd starter/frontend && npm run lint
+    - name: Run lint
+      run: npm run lint --fix
 
-  Test:
+  test:
     runs-on: ubuntu-latest
 
     steps:
@@ -42,9 +47,10 @@ jobs:
         node-version: 18
         cache: 'npm'
         cache-dependency-path: starter/frontend/package-lock.json
+
     - name: Install Dependencies
       working-directory: starter/frontend
       run: npm ci
   
     - name: Test
-      run: cd starter/frontend && npm run test
+      run: npm run test
