@@ -1,10 +1,12 @@
-name: Frontend Continuous Integration X
+name: Frontend Continuous Integration
 
 on:
   workflow_dispatch:
   pull_request:
     branches:
       - main
+    path:
+      - '../../starter/frontend/**'
 
 defaults:
   run:
