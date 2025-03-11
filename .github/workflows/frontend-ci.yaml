@@ -68,7 +68,6 @@ jobs:
   build:
     needs: [lint, test]
     runs-on: ubuntu-latest
-
     steps:
     - name: Check the Repository
       uses: actions/checkout@v3
