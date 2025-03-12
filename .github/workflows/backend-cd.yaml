@@ -13,3 +13,11 @@ defaults:
 env:
   PYTHON_VERSION: '3.10.6'
   CLUSTER_NAME: cluster
+
+jobs:
+  test-build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code from Rep
+      uses: actions/checkout@v3

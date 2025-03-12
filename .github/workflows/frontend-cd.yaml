@@ -20,7 +20,7 @@ jobs:
 
     steps:
     - name: Check out code from Rep
-      uses: actions/setup-node@v3
+      uses: actions/checkout@v3
     
     - name: Set up a node.js env using a specified version
       uses: actions/setup-node@v3
