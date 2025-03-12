@@ -1,1 +1,15 @@
 name: Backend Continuous Deployment
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches: main
+
+defaults:
+  run:
+    working-directory: ./starter/backend
+
+env:
+  PYTHON_VERSION: '3.10.6'
+  CLUSTER_NAME: cluster
