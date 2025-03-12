@@ -1,1 +1,47 @@
 name: Frontend Continuous Deployment
+
+on:
+  workflow_dispatch:
+
+  push:
+    branches: main
+
+defaults:
+  run:
+    working-directory: ./starter/frontend
+
+env:
+  NODE_VERSION: '18.14'
+  CLUSTER_NAME: cluster
+
+jobs:
+  rest-build-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Check out code from Rep
+      uses: actions/setup-node@v3
+    
+    - name: Set up a node.js env using a specified version
+      uses: action/setup-node@v3
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+
+    - name: Restore Cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.npm
+        key: ${{ runner.os }}-npm-cache-${{ hashFiles('**/package.lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-npm-cache-
+
+    - name: Install Dependencies
+      working-directory: starter/frontend
+      run: npm ci
+
+    - name: Run lint
+      run: npm run lint -- --fix
+
+    - name: Run test
+      run: npm run test
