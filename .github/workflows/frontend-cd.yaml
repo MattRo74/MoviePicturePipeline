@@ -15,7 +15,7 @@ env:
   CLUSTER_NAME: cluster
 
 jobs:
-  rest-build-deploy:
+  test-build-deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -37,7 +37,6 @@ jobs:
           ${{ runner.os }}-npm-cache-
 
     - name: Install Dependencies
-      working-directory: starter/frontend
       run: npm ci
 
     - name: Run lint
