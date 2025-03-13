@@ -21,14 +21,13 @@ jobs:
     steps:
     - name: Check out code from Rep
       uses: actions/checkout@v3
-    
+
+
+
     - name: Set up environment
       uses: actions/setup-python@v5
       with:
         python-version: ${{ env.PYTHON_VERSION }}
-    
-    - name: Install pipenv
-      uses: pip install pipenv
     
     - name: Restore Cache
       uses: actions/cache@v3
