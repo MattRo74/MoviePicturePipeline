@@ -63,7 +63,7 @@ jobs:
     
     - name: Build and push image to ECR
       run: | 
-        docker build -t mp-backend:latest
+        docker build -t mp-backend:latest .
         docker tag mp-backend:latest 805368583177.dkr.ecr.us-east-1.amazonaws.com/backend:${GITHUB_SHA}
         docker push 805368583177.dkr.ecr.us-east-1.amazonaws.com/backend:${GITHUB_SHA}
     
