@@ -54,3 +54,4 @@ Fetches the ARN (Amazon Resource Name) for a specific IAM (Identity and Access M
 Downloads a specific version (v0.6.2) of the AWS IAM Authenticator for Kubernetes, makes it executable, and then uses it to update the AWS IAM role/user permissions. Specifically, it adds the IAM user to the Kubernetes cluster with the role or username github-action-role and assigns it to the system:masters group, which typically has full access to the cluster.
 Cleans up by removing the downloaded AWS IAM Authenticator binary.
 You only need to do this operation once. Therefore, you may run this shell script directly in your terminal.
+
