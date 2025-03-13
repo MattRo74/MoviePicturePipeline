@@ -44,3 +44,33 @@ jobs:
 
     - name: Run test
       run: npm run test
+
+    - name: Configure AWS
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+        aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+        aws-session-token: ${{secrets.AWS_SESSION_TOKEN}}
+        aws-region: us-east-1
+    
+    - name: Build and push image to ECR
+      run: | 
+        docker build --build-arg=REAT_APP_MOVIE_API_URL= ${{secrets.REAT_APP_MOVIE_API_URL}} -t mp-frontend:v2 .
+        docker tag mp-frontend:v2 805368583177.dkr.ecr.us-east-1.amazonaws.com/frontend:${GITHUB_SHA}
+        docker push 805368583177.dkr.ecr.us-east-1.amazonaws.com/frontend:${GITHUB_SHA}
+
+    - name: Update Kubernetes config
+      run: |
+        echo "CLUSTER_NAME=$CLUSTER_NAME" >> GITHUB_ENV
+        aws eks update-config --name ${{ env.CLUSTER_NAME }} --region us-east-1
+
+    - name: Deploy to K8s
+      run: |
+        kustomize edit set image frontend=805368583177.dkr.ecr.us-east-1.amazonaws.com/frontend:${GITHUB_SHA}
+        kustomize build|kubectl apply -k .
+  
+    - name: Gather K8 status
+      run: |
+        kubectl get pods -A
+        kubectl get svc -A
+        kubectl describe pods -A

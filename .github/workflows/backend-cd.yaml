@@ -67,7 +67,7 @@ jobs:
         docker tag mp-backend:latest 805368583177.dkr.ecr.us-east-1.amazonaws.com/backend:${GITHUB_SHA}
         docker push 805368583177.dkr.ecr.us-east-1.amazonaws.com/backend:${GITHUB_SHA}
     
-    - name: Update config
+    - name: Update Kubernetes config
       run: |
         echo "CLUSTER_NAME=$CLUSTER_NAME" >> GITHUB_ENV
         aws eks update-config --name ${{ env.CLUSTER_NAME }} --region us-east-1
@@ -76,6 +76,7 @@ jobs:
       run: |
         kustomize edit set image backend=805368583177.dkr.ecr.us-east-1.amazonaws.com/backend:${GITHUB_SHA}
         kustomize build|kubectl apply -k .
+  
     - name: Gather K8 status
       run: |
         kubectl get pods -A
