@@ -74,9 +74,8 @@ jobs:
         docker push 805368583177.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
     
     - name: Update Kubernetes config
-      run: |
-        echo "CLUSTER_NAME=$CLUSTER_NAME" >> GITHUB_ENV
-        aws eks update-config --name ${{ env.CLUSTER_NAME }} --region us-east-1
+      run:
+        aws eks update-config --name cluster --region us-east-1
 
     - name: Deploy to K8s
       run: |
