@@ -83,7 +83,7 @@ jobs:
         IMAGE_TAG: latest
         REPO_NAME: backend
       run: |
-        kubec config current-context
+        kubectl config current-context
         kustomize edit set image backend=805368583177.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
         kustomize build | kubectl apply -k .
   
