@@ -78,7 +78,7 @@ jobs:
         aws eks update-kubeconfig --name cluster --region us-east-1
 
     - name: Deploy to K8s
-       working-directory: starter/backend/k8s
+      working-directory: starter/backend/k8s
       env:
         IMAGE_TAG: latest
         REPO_NAME: backend
