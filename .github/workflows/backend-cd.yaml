@@ -67,7 +67,7 @@ jobs:
 
     - name: Build and push image to ECR
       env:
-        IMAGE_TAG: latest
+        IMAGE_TAG: V2
         REPO_NAME: backend
       run: | 
         docker build --build-arg=REAT_APP_MOVIE_API_URL= ${{secrets.REAT_APP_MOVIE_API_URL}} --tag 805368583177.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG .
@@ -80,7 +80,7 @@ jobs:
     - name: Deploy to K8s
       working-directory: starter/backend/k8s
       env:
-        IMAGE_TAG: latest
+        IMAGE_TAG: V2
         REPO_NAME: backend
       run: |
         aws eks update-kubeconfig --name cluster --region us-east-1
