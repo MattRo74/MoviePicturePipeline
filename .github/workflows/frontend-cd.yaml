@@ -62,6 +62,7 @@ jobs:
         IMAGE_TAG: V2
         REPO_NAME: frontend
       run: | 
+        echo ${{secrets.REACT_APP_MOVIE_API_URL}}
         docker build --build-arg=REACT_APP_MOVIE_API_URL=${{secrets.REACT_APP_MOVIE_API_URL}} --tag $REPO_NAME:$IMAGE_TAG .
         docker push 805368583177.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
 
