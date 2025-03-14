@@ -59,8 +59,8 @@ jobs:
 
     - name: Update Kubernetes config
       run:
-        aws eks update-kubeconfig --name cluster--region us-east-1
-        
+        aws eks update-kubeconfig --name cluster --region us-east-1
+
     - name: Gather K8 status as prep
       run: |
         kubectl get pods -A
@@ -86,7 +86,7 @@ jobs:
         IMAGE_TAG: V2
         REPO_NAME: frontend
       run: |
-        aws eks update-config --name cluster--region us-east-1
+        aws eks update-config --name cluster --region us-east-1
         kustomize edit set image frontend=805368583177.dkr.ecr.us-east-1.amazonaws.com//$REPO_NAME:$IMAGE_TAG
         kustomize build|kubectl apply -f .
   
