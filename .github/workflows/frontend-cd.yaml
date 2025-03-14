@@ -57,6 +57,10 @@ jobs:
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
 
+    - name: Update Kubernetes config
+      run:
+        aws eks update-kubeconfig --name cluster--region us-east-1
+        
     - name: Gather K8 status as prep
       run: |
         kubectl get pods -A
