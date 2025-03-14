@@ -84,7 +84,7 @@ jobs:
         REPO_NAME: backend
       run: |
         kubectl config current-context
-        kustomize edit set image backend=805368583177.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
+        kustomize edit set image backend=805368583177.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG --validate=false
         kustomize build | kubectl apply -k .
   
     - name: Gather K8 status
