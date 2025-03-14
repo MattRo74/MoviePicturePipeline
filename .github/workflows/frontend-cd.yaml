@@ -52,11 +52,17 @@ jobs:
         aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
         aws-session-token: ${{secrets.AWS_SESSION_TOKEN}}
         aws-region: us-east-1
-    
+
+    - name: Login to ECR
+      run: login-ecr
+      uses: aws-actions/amazon-ecr-login@v2
+        
     - name: Build and push image to ECR
+      env:
+        IMAGE_TAG: latest
+        REPO_NAME: frontend    
       run: | 
         docker build --build-arg=REAT_APP_MOVIE_API_URL= ${{secrets.REAT_APP_MOVIE_API_URL}} -t mp-frontend:v2 .
-        docker tag mp-frontend:v2 805368583177.dkr.ecr.us-east-1.amazonaws.com/frontend:${GITHUB_SHA}
         docker push 805368583177.dkr.ecr.us-east-1.amazonaws.com/frontend:${GITHUB_SHA}
 
     - name: Update Kubernetes config
