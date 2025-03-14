@@ -63,8 +63,9 @@ jobs:
         REPO_NAME: frontend
       run: | 
         echo ${{secrets.REACT_APP_MOVIE_API_URL}}
-        export EXTERNALIP=$(kubectl get svc backend -o=jsonpath='{.status.loadBalancer.ingress[0].hostname}{"\n"}{.status.loadBalancer.ingress[0].ip}')
-        echo $EXTERNALIP
+        kubectl get svc backend
+        # export EXTERNALIP=$(kubectl get svc backend -o=jsonpath='{.status.loadBalancer.ingress[0].hostname}{"\n"}{.status.loadBalancer.ingress[0].ip}')
+        # echo $EXTERNALIP
         # docker build --build-arg=REACT_APP_MOVIE_API_URL=${{secrets.REACT_APP_MOVIE_API_URL}} --tag $REPO_NAME:$IMAGE_TAG .
         # docker push 805368583177.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
 
