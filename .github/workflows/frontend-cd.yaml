@@ -59,8 +59,8 @@ jobs:
         
     - name: Build and push image to ECR
       env:
-        IMAGE_TAG: latest
-        REPO_NAME: frontend    
+        IMAGE_TAG: V2
+        REPO_NAME: frontend
       run: | 
         docker build --build-arg=REAT_APP_MOVIE_API_URL= ${{secrets.REAT_APP_MOVIE_API_URL}} -t $REPO_NAME:$IMAGE_TAG .
         docker push 805368583177.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
@@ -68,11 +68,15 @@ jobs:
     - name: Update Kubernetes config
       run: |
         echo "CLUSTER_NAME=$CLUSTER_NAME" >> GITHUB_ENV
-        aws eks update-config --name ${{ env.CLUSTER_NAME }} --region us-east-1
+        aws eks update-config --name cluster--region us-east-1
 
     - name: Deploy to K8s
+      env:
+        IMAGE_TAG: V2
+        REPO_NAME: frontend
       run: |
-        kustomize edit set image frontend=805368583177.dkr.ecr.us-east-1.amazonaws.com/frontend:${GITHUB_SHA}
+        aws eks update-config --name cluster--region us-east-1
+        kustomize edit set image frontend=805368583177.dkr.ecr.us-east-1.amazonaws.com//$REPO_NAME:$IMAGE_TAG
         kustomize build|kubectl apply -k .
   
     - name: Gather K8 status
