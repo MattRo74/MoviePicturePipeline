@@ -74,7 +74,7 @@ jobs:
         docker push 805368583177.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
     
     - name: Update Kubernetes config
-      run:
+      run: |
         aws eks update-kubeconfig --name cluster --region us-east-1
 
     - name: Deploy to K8s
@@ -83,7 +83,8 @@ jobs:
         IMAGE_TAG: latest
         REPO_NAME: backend
       run: |
-        kustomize edit set image backend=805368583177.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG --validate=false
+        kubec config current-context
+        kustomize edit set image backend=805368583177.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
         kustomize build | kubectl apply -k .
   
     - name: Gather K8 status
