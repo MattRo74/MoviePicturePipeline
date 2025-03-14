@@ -56,7 +56,13 @@ jobs:
     - name: Login to ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v2
-        
+
+    - name: Gather K8 status as prep
+      run: |
+        kubectl get pods -A
+        kubectl get svc -A
+        kubectl describe pods -A 
+
     - name: Build and push image to ECR
       env:
         IMAGE_TAG: V2
