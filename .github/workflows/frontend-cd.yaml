@@ -69,7 +69,7 @@ jobs:
 
     - name: Build and push image to ECR
       env:
-        IMAGE_TAG: V2
+        IMAGE_TAG: latest
         REPO_NAME: frontend
       run: | 
         echo ${{secrets.REACT_APP_MOVIE_API_URL}}
@@ -83,7 +83,7 @@ jobs:
     - name: Deploy to K8s
       working-directory: starter/frontend/k8s
       env:
-        IMAGE_TAG: V2
+        IMAGE_TAG: latest
         REPO_NAME: frontend
       run: |
         aws eks update-config --name cluster --region us-east-1
