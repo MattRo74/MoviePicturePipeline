@@ -73,8 +73,8 @@ jobs:
         REPO_NAME: frontend
       run: | 
         echo ${{secrets.REACT_APP_MOVIE_API_URL}}
-        docker build --build-arg=REACT_APP_MOVIE_API_URL=${{secrets.REACT_APP_MOVIE_API_URL}} --tag 805368583177.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG .
-        docker push 805368583177.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
+        docker build --build-arg=REACT_APP_MOVIE_API_URL=${{secrets.REACT_APP_MOVIE_API_URL}} --tag 593793065722.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG .
+        docker push 593793065722.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
 
     - name: Update Kubernetes config
       run:
@@ -87,7 +87,7 @@ jobs:
         REPO_NAME: frontend
       run: |
         aws eks update-kubeconfig --name cluster --region us-east-1
-        kustomize edit set image frontend=805368583177.dkr.ecr.us-east-1.amazonaws.com//$REPO_NAME:$IMAGE_TAG
+        kustomize edit set image frontend=593793065722.dkr.ecr.us-east-1.amazonaws.com//$REPO_NAME:$IMAGE_TAG
         kustomize build | kubectl apply -f -
   
     - name: Gather K8 status
