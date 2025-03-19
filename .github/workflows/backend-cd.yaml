@@ -69,9 +69,8 @@ jobs:
       env:
         IMAGE_TAG: latest
         REPO_NAME: backend
-      run: | 
-        docker build -t $REPO_NAME:$IMAGE_TAG .
-        docker --tag 593793065722.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
+      run: |
+        docker build --build-arg=REACT_APP_MOVIE_API_URL=${{secrets.BACKEND_API_URL}} --tag 593793065722.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG .
         docker push 593793065722.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
     
     - name: Update Kubernetes config
