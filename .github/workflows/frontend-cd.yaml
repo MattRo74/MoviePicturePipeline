@@ -71,10 +71,7 @@ jobs:
       env:
         IMAGE_TAG: latest
         REPO_NAME: frontend
-      run: | 
-        echo ${{secrets.REACT_APP_MOVIE_API_URL}}
-        # URL Backend Loadbalancer:
-        echo ${{secrets.BACKEND_API_URL}}
+      run: |
         docker build --build-arg=REACT_APP_MOVIE_API_URL=${{secrets.BACKEND_URL_TEST}} --tag 593793065722.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG .
         docker push 593793065722.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
 
