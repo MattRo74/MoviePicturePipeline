@@ -90,7 +90,7 @@ jobs:
         kustomize edit set image frontend=593793065722.dkr.ecr.us-east-1.amazonaws.com/$REPO_NAME:$IMAGE_TAG
         kustomize build | kubectl apply -f -
   
-    - name: Gather K8 status
+    - name: Gather K8 status 
       run: |
         kubectl get pods -A
         kubectl get svc -A
